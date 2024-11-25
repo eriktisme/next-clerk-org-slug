@@ -2,8 +2,6 @@ import 'server-only'
 
 import { ReactNode } from 'react'
 import { auth, currentUser } from '@clerk/nextjs/server'
-import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
-import { AppSidebar } from '@/components/app-sidebar'
 
 export default async function Layout({
   children,
@@ -18,12 +16,8 @@ export default async function Layout({
   }
 
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <main>
-        <SidebarTrigger />
-        {children}
-      </main>
-    </SidebarProvider>
+    <div className="flex min-h-svh flex-1 items-center justify-center">
+      {children}
+    </div>
   )
 }

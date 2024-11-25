@@ -1,3 +1,13 @@
+'use client'
+
+import { OrganizationList } from '@clerk/nextjs'
+
 export default function Page() {
-  return null
+  return (
+    <OrganizationList
+      hidePersonal
+      afterCreateOrganizationUrl={(organization) => `/${organization.slug}`}
+      afterSelectOrganizationUrl={(organization) => `/${organization.slug}`}
+    />
+  )
 }

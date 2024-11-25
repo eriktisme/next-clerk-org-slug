@@ -106,6 +106,25 @@ const handleOrganizationUpdated = (data: OrganizationJSON) => {
   return new Response('Organization updated', { status: 201 })
 }
 
+const handleOrganizationDeleted = (data: DeletedObjectJSON) => {
+  if (data.id) {
+    analytics.groupIdentify({
+      groupKey: data.id,
+      groupType: 'company',
+      properties: {
+        deleted: new Date(),
+      },
+    })
+
+    analytics.capture({
+      event: 'Organization Deleted',
+      distinctId: data.id,
+    })
+  }
+
+  return new Response('Organization deleted', { status: 201 })
+}
+
 const handleOrganizationMembershipCreated = (
   data: OrganizationMembershipJSON
 ) => {
@@ -194,6 +213,10 @@ export const POST = async (request: Request): Promise<Response> => {
     }
     case 'organization.updated': {
       response = handleOrganizationUpdated(event.data)
+      break
+    }
+    case 'organization.deleted': {
+      response = handleOrganizationDeleted(event.data)
       break
     }
     case 'organizationMembership.created': {
