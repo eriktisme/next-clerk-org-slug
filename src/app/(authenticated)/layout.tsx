@@ -15,9 +15,5 @@ export default async function Layout({
     redirectToSignIn()
   }
 
-  return (
-    <div className="flex min-h-svh flex-1 items-center justify-center">
-      {children}
-    </div>
-  )
+  return <>{children}</>
 }
