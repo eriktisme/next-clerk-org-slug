@@ -1,0 +1,19 @@
+name: End to End Tests
+
+on:
+  deployment_status:
+
+jobs:
+  run-e2es:
+    if: github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: pnpm i --frozen-lockfile
+
+      - run: pnpm exec playwright install --with-deps
+
+      - run: npx playwright test
+        env:
+          BASE_URL: ${{ github.event.deployment_status.environment_url }}
